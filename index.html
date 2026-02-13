@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Letter for Florian</title>
   
-  <!-- Medieval Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🏰</text></svg>">
   
   <style>
@@ -117,6 +116,7 @@
       overflow-y: auto;
       max-height: 100%;
       box-sizing: border-box;
+      scroll-behavior: smooth;
       
       /* Hide scrollbar but keep functionality */
       scrollbar-width: none;
@@ -133,17 +133,34 @@
       }
     }
 
-    /* --- TEXT STYLING (UPDATED FOR MEDIEVAL LOOK) --- */
+    /* --- TEXT STYLING --- */
     .c-scroll__text {
-      /* Changed to MedievalSharp for the requested medieval look */
       font-family: 'MedievalSharp', cursive;
       font-size: 26px; 
-      line-height: 1.4;
-      text-align: justify; /* Justified text looks more like a manuscript */
+      line-height: 1.6; /* Increased slightly for reading */
+      text-align: justify;
       text-shadow: 0 1px 1px rgba(255,255,255,0.3);
     }
 
-    /* Decorative first letter (Drop Cap) */
+    /* Word Animation Styling */
+    .word {
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      display: inline;
+      border-radius: 3px;
+    }
+
+    /* State: Word has been read */
+    .word.read {
+      color: #bfa15f; /* Gold color */
+      text-shadow: 0 0 1px #8a6e2f;
+    }
+    
+    /* State: Currently being spoken (optional extra pop) */
+    .word.active {
+      color: #ffdb58; /* Brighter gold */
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+
     .c-scroll__text p:first-of-type::first-letter {
       float: left;
       font-family: 'Cinzel', serif;
@@ -151,7 +168,7 @@
       line-height: 50px;
       padding-right: 10px;
       padding-top: 5px;
-      color: #5d0000; /* Dark red for the drop cap */
+      color: #5d0000;
       font-weight: 700;
     }
 
@@ -317,12 +334,6 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.5);
       z-index: -2;
     }
-
-    @media (max-width: 480px) {
-      .c-ribbon__line {
-        height: 4px;
-      }
-    }
     
     .c-seal {
       width: 80px;
@@ -336,13 +347,6 @@
       position: relative;
     }
 
-    @media (max-width: 480px) {
-      .c-seal {
-        width: 65px;
-        height: 60px;
-      }
-    }
-
     .c-seal__emblem {
       font-family: 'Cinzel', serif;
       font-size: 36px;
@@ -354,15 +358,6 @@
       text-align: center;
       line-height: 50px;
       text-shadow: 1px 1px 1px rgba(255,255,255,0.1);
-    }
-
-    @media (max-width: 480px) {
-      .c-seal__emblem {
-        font-size: 28px;
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-      }
     }
 
     /* --- OPEN STATE LOGIC --- */
@@ -401,20 +396,7 @@
       padding: 0 20px;
     }
 
-    @media (max-width: 480px) {
-      .instruction {
-        font-size: 14px;
-        top: 8%;
-        letter-spacing: 1px;
-      }
-    }
-
     @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
-
-    .c-seal-wrapper, .c-seal, .instruction {
-      -webkit-user-select: none;
-      user-select: none;
-    }
 
     /* --- CLOSE BUTTONS --- */
     .c-close-btn {
@@ -431,7 +413,6 @@
       transition: opacity 0.5s 1.5s;
       -webkit-user-select: none;
       user-select: none;
-      -webkit-tap-highlight-color: transparent;
       font-size: 36px;
       color: #c5a059;
       text-align: center;
@@ -443,21 +424,15 @@
       opacity: 1;
       pointer-events: auto;
     }
-
-    @media (max-width: 480px) {
-      .c-close-btn {
-        font-size: 30px;
-        width: 35px;
-        height: 35px;
-        line-height: 35px;
-      }
-    }
-
   </style>
 </head>
 <body>
 
-  <div class="instruction">Tap the Seal to Unfold</div>
+  <audio id="audioPlayer" src="./musics/audio-1_Do3gV2qb.wav" preload="auto"></audio>
+  
+  <audio id="bgMusic" src="./musics/music_for_videos-romance-164950.mp3" loop preload="auto"></audio>
+
+  <div class="instruction">Tap the Seal to Unfold </div>
 
   <div class="c-scroll" id="scrollContainer">
     
@@ -479,12 +454,12 @@
     </div>
 
     <div class="c-scroll__paper">
-      <div class="c-scroll__content">
-        <div class="c-scroll__text">
+      <div class="c-scroll__content" id="scrollContent">
+        <div class="c-scroll__text" id="letterText">
           
           <div class="salutation">To my dearest Florian,</div>
           
-          <p>On this blessed Feast of Saint Valentine, I take quill in hand to declare the love that abideth within my heart — not for this day alone, but for every morrow that God granteth us. Each day spent in thy presence is a blessing and a joy beyond measure, a treasure richer than gold.</p>
+          <p>On this blessed day of Saint Valentine, I take quill in hand to declare the love that abideth within my heart — not for this day alone, but for every morrow that God granteth us. Each day spent in thy presence is a blessing and a joy beyond measure, a treasure richer than gold.</p>
           
           <p>My heart desireth naught but to walk beside thee for the rest of my days, sharing in thy laughter and standing firm beside thee in times of trial. I shall cherish thee dearly, care for thee tenderly, and hold thee in faithful devotion.</p>
           
@@ -515,16 +490,118 @@
     const closeBtnTop = document.getElementById('closeBtnTop');
     const closeBtnBottom = document.getElementById('closeBtnBottom');
     const instruction = document.querySelector('.instruction');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const bgMusic = document.getElementById('bgMusic'); // Select the new music element
+    const scrollContent = document.getElementById('scrollContent');
 
-    // Open the scroll
+    // --- SETUP: BACKGROUND MUSIC VOLUME ---
+    // Set volume to 15% so it is "low"
+    bgMusic.volume = 0.15; 
+
+    // 1. PREPARE THE TEXT
+    function splitTextIntoSpans() {
+      const paragraphs = document.querySelectorAll('.c-scroll__text p, .salutation, .signature-main');
+      let globalWordIndex = 0;
+
+      paragraphs.forEach(p => {
+        const words = p.innerText.trim().split(/\s+/);
+        p.innerHTML = words.map(word => {
+          const id = `word-${globalWordIndex++}`;
+          return `<span id="${id}" class="word">${word} </span>`;
+        }).join('');
+      });
+      
+      return globalWordIndex; 
+    }
+
+    const totalWords = splitTextIntoSpans();
+
+    // 2. TIMING DATA (Dummy)
+    let wordTimings = [];
+    const estimatedAudioDuration = 60; 
+    const timePerWord = estimatedAudioDuration / totalWords;
+    for(let i=0; i < totalWords; i++) {
+      wordTimings.push(1 + (i * timePerWord)); 
+    }
+
+    let currentActiveIndex = -1;
+
+    // 3. AUDIO SYNC & SCROLL LOGIC
+    audioPlayer.addEventListener('timeupdate', () => {
+      const currentTime = audioPlayer.currentTime;
+      let newActiveIndex = -1;
+      for (let i = 0; i < wordTimings.length; i++) {
+        if (currentTime >= wordTimings[i]) {
+          newActiveIndex = i;
+        } else {
+          break; 
+        }
+      }
+
+      if (newActiveIndex !== currentActiveIndex) {
+        currentActiveIndex = newActiveIndex;
+        highlightWords(currentActiveIndex);
+      }
+    });
+
+    function highlightWords(index) {
+      if (index === -1) return;
+      for (let i = 0; i <= index; i++) {
+        const span = document.getElementById(`word-${i}`);
+        if (span) {
+          span.classList.add('read');
+          if (i === index) span.classList.add('active');
+          else span.classList.remove('active');
+        }
+      }
+
+      const activeSpan = document.getElementById(`word-${index}`);
+      if (activeSpan) {
+        activeSpan.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'nearest'
+        });
+      }
+    }
+
+    // 4. OPEN HANDLER (Starts everything)
     sealBtn.addEventListener('click', function() {
       scrollContainer.classList.add('open');
       instruction.style.display = 'none';
+      
+      // Play Background Music immediately (looping)
+      // Browsers require interaction (click) to play audio, so this is the perfect spot.
+      if (bgMusic.paused) {
+        bgMusic.play().catch(e => console.log("BgMusic play failed:", e));
+      }
+
+      // Play Voiceover after slight animation delay
+      setTimeout(() => {
+        audioPlayer.play().catch(e => console.log("Voiceover Autoplay blocked:", e));
+      }, 100);
     });
 
-    // Close the scroll and return to sealed state
+    // 5. CLOSE HANDLER
     function closeScroll() {
       scrollContainer.classList.remove('open');
+      
+      // Stop Voiceover and Reset
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+      currentActiveIndex = -1;
+      
+      // Note: We intentionally DO NOT pause bgMusic here, 
+      // so it continues to play as requested.
+
+      // Reset Word Colors
+      document.querySelectorAll('.word').forEach(span => {
+        span.classList.remove('read', 'active');
+      });
+      
+      // Scroll back to top
+      scrollContent.scrollTop = 0;
+
       setTimeout(() => {
         instruction.style.display = 'block';
       }, 800);

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letter for Florian</title>
+  
+  <!-- Medieval Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🏰</text></svg>">
+  
+  <style>
+    /* Importing MedievalSharp for the text and Cinzel for decorative elements */
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap');
+
+    :root {
+      --scroll-width: 580px;
+      --paper-height: 700px;
+      --paper-base: #d2b48c;
+      --wood-dark: #1a0f05;
+      --wood-light: #4a2e19;
+      --gold-accent: #c5a059;
+      --transition-speed: 1.5s;
+    }
+
+    /* Mobile-first adjustments */
+    @media (max-width: 768px) {
+      :root {
+        --scroll-width: 90vw;
+        --paper-height: 85vh;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --scroll-width: 95vw;
+        --paper-height: 80vh;
+      }
+    }
+
+    body {
+      background-color: #050505;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    /* --- SCROLL CONTAINER --- */
+    .c-scroll {
+      position: relative;
+      width: var(--scroll-width);
+      max-width: 580px;
+      height: var(--paper-height);
+      max-height: 700px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* --- THE PAPER --- */
+    .c-scroll__paper {
+      width: calc(100% - 60px);
+      position: absolute;
+      z-index: 1;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: height var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
+      
+      background: 
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, transparent 80%),
+        radial-gradient(circle at 20% 30%, rgba(101, 67, 33, 0.15) 0%, transparent 40%),
+        var(--paper-base);
+      
+      /* Ragged Edges */
+      clip-path: polygon(
+        0% 2%, 5% 0%, 10% 3%, 15% 1%, 20% 4%, 25% 1%, 30% 3%, 35% 0%, 40% 2%, 45% 1%, 50% 3%, 55% 1%, 60% 4%, 65% 1%, 70% 3%, 75% 0%, 80% 2%, 85% 1%, 90% 4%, 95% 1%, 100% 2%,
+        100% 98%, 95% 100%, 90% 97%, 85% 99%, 80% 96%, 75% 100%, 70% 97%, 65% 99%, 60% 96%, 55% 100%, 50% 97%, 45% 99%, 40% 96%, 35% 100%, 30% 97%, 25% 99%, 20% 96%, 15% 100%, 10% 97%, 5% 99%, 0% 98%
+      );
+      
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.3);
+    }
+
+    .c-scroll__paper::before, .c-scroll__paper::after {
+      content: "❧";
+      position: absolute;
+      font-size: 80px;
+      color: rgba(62, 39, 35, 0.4);
+      pointer-events: none;
+    }
+    .c-scroll__paper::before { top: 20px; left: 20px; transform: rotate(-45deg); }
+    .c-scroll__paper::after { bottom: 20px; right: 20px; transform: rotate(135deg); }
+
+    @media (max-width: 480px) {
+      .c-scroll__paper::before, .c-scroll__paper::after {
+        font-size: 50px;
+        opacity: 0.3;
+      }
+      .c-scroll__paper::before { top: 10px; left: 10px; }
+      .c-scroll__paper::after { bottom: 10px; right: 10px; }
+    }
+
+    /* --- CONTENT --- */
+    .c-scroll__content {
+      padding: 60px 50px 80px 50px;
+      text-align: center;
+      color: #3e2723;
+      opacity: 1;
+      transition: opacity 1s ease;
+      overflow-y: auto;
+      max-height: 100%;
+      box-sizing: border-box;
+      
+      /* Hide scrollbar but keep functionality */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .c-scroll__content::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .c-scroll__content {
+        padding: 40px 30px 60px 30px;
+      }
+    }
+
+    /* --- TEXT STYLING (UPDATED FOR MEDIEVAL LOOK) --- */
+    .c-scroll__text {
+      /* Changed to MedievalSharp for the requested medieval look */
+      font-family: 'MedievalSharp', cursive;
+      font-size: 26px; 
+      line-height: 1.4;
+      text-align: justify; /* Justified text looks more like a manuscript */
+      text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+    }
+
+    /* Decorative first letter (Drop Cap) */
+    .c-scroll__text p:first-of-type::first-letter {
+      float: left;
+      font-family: 'Cinzel', serif;
+      font-size: 65px;
+      line-height: 50px;
+      padding-right: 10px;
+      padding-top: 5px;
+      color: #5d0000; /* Dark red for the drop cap */
+      font-weight: 700;
+    }
+
+    .salutation {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #5d0000;
+      font-family: 'Cinzel', serif;
+    }
+
+    .signature-block {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .signature-main {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .c-scroll__text {
+        font-size: 22px;
+        line-height: 1.4;
+      }
+      .c-scroll__text p:first-of-type::first-letter {
+        font-size: 50px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .c-scroll__text {
+        font-size: 18px;
+        line-height: 1.4;
+      }
+      .salutation {
+        font-size: 20px;
+      }
+      .signature-main {
+        font-size: 24px;
+      }
+    }
+
+    /* --- HOLDERS (The Wooden Rollers) --- */
+    .c-scroll__holder {
+      position: absolute;
+      width: 100%;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .c-scroll__holder--top { top: 50%; transform: translateY(-50%); }
+    .c-scroll__holder--bottom { bottom: 50%; transform: translateY(50%); }
+
+    .c-scroll__roll {
+      width: 100%;
+      height: 60px;
+      background: 
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 10px),
+        linear-gradient(to bottom, #1a0f05 0%, #3d2b1f 50%, #1a0f05 100%);
+      border-radius: 5px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (max-width: 480px) {
+      .c-scroll__roll {
+        height: 45px;
+      }
+    }
+
+    /* --- MEDIEVAL KNOBS --- */
+    .c-scroll__knob {
+      width: 30px;
+      height: 90px;
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      transform: translateY(-50%);
+      background: 
+        linear-gradient(to right, #8a6e2f, #ffd700 50%, #8a6e2f) 0 85% / 100% 6px no-repeat,
+        linear-gradient(to right, #8a6e2f, #ffd700 50%, #8a6e2f) 0 15% / 100% 6px no-repeat,
+        linear-gradient(to right, #0f0803, #4a2e19 40%, #6d4c41 50%, #4a2e19 60%, #0f0803);
+      box-shadow: 5px 10px 15px rgba(0,0,0,0.6);
+      border-radius: 4px;
+    }
+
+    @media (max-width: 480px) {
+      .c-scroll__knob {
+        width: 20px;
+        height: 65px;
+      }
+    }
+
+    .c-scroll__knob::after {
+      content: '';
+      position: absolute;
+      width: 120%;
+      left: -10%;
+      height: 25px;
+      background: radial-gradient(circle at 30% 30%, #5d4037, #1a0f05);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 480px) {
+      .c-scroll__knob::after {
+        height: 18px;
+      }
+    }
+
+    .c-scroll__holder--top .c-scroll__knob::after { top: -15px; } 
+    .c-scroll__holder--bottom .c-scroll__knob::after { bottom: -15px; } 
+
+    .c-scroll__knob--left { left: -15px; }
+    .c-scroll__knob--right { right: -15px; }
+
+    @media (max-width: 480px) {
+      .c-scroll__knob--left { left: -10px; }
+      .c-scroll__knob--right { right: -10px; }
+      .c-scroll__holder--top .c-scroll__knob::after { top: -10px; }
+      .c-scroll__holder--bottom .c-scroll__knob::after { bottom: -10px; }
+    }
+
+    /* --- SEAL & RIBBON WRAPPER --- */
+    .c-seal-wrapper {
+      position: absolute;
+      z-index: 100;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      transition: opacity 0.5s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .c-ribbon {
+      position: absolute;
+      z-index: -1;
+      width: 200px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .c-ribbon__line {
+      position: absolute;
+      width: 100vw;
+      max-width: var(--scroll-width);
+      height: 6px;
+      background: linear-gradient(to bottom, #8e0000, #500000);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      z-index: -2;
+    }
+
+    @media (max-width: 480px) {
+      .c-ribbon__line {
+        height: 4px;
+      }
+    }
+    
+    .c-seal {
+      width: 80px;
+      height: 75px;
+      background: radial-gradient(circle at 30% 30%, #8b0000, #4a0000);
+      border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset -5px -5px 10px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    @media (max-width: 480px) {
+      .c-seal {
+        width: 65px;
+        height: 60px;
+      }
+    }
+
+    .c-seal__emblem {
+      font-family: 'Cinzel', serif;
+      font-size: 36px;
+      color: rgba(0,0,0,0.3);
+      border: 2px solid rgba(0,0,0,0.2);
+      width: 50px; 
+      height: 50px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 50px;
+      text-shadow: 1px 1px 1px rgba(255,255,255,0.1);
+    }
+
+    @media (max-width: 480px) {
+      .c-seal__emblem {
+        font-size: 28px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+      }
+    }
+
+    /* --- OPEN STATE LOGIC --- */
+    .c-scroll.open .c-scroll__paper {
+      height: var(--paper-height);
+      opacity: 1;
+    }
+
+    .c-scroll.open .c-scroll__holder--top {
+      transform: translateY(calc(-50% - (var(--paper-height) / 2) + 15px));
+    }
+
+    .c-scroll.open .c-scroll__holder--bottom {
+      transform: translateY(calc(50% + (var(--paper-height) / 2) - 15px));
+    }
+
+    .c-scroll.open .c-seal-wrapper {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .c-scroll.open .c-ribbon__line {
+      opacity: 0;
+    }
+
+    .instruction {
+      position: absolute;
+      top: 10%;
+      color: #d2b48c;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 2px;
+      animation: pulse 2s infinite;
+      z-index: 200;
+      font-size: 16px;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    @media (max-width: 480px) {
+      .instruction {
+        font-size: 14px;
+        top: 8%;
+        letter-spacing: 1px;
+      }
+    }
+
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+    .c-seal-wrapper, .c-seal, .instruction {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* --- CLOSE BUTTONS --- */
+    .c-close-btn {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      z-index: 20;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s 1.5s;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      font-size: 36px;
+      color: #c5a059;
+      text-align: center;
+      line-height: 40px;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+    }
+
+    .c-scroll.open .c-close-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 480px) {
+      .c-close-btn {
+        font-size: 30px;
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="instruction">Tap the Seal to Unfold</div>
+
+  <div class="c-scroll" id="scrollContainer">
+    
+    <div class="c-seal-wrapper" id="sealBtn">
+      <div class="c-ribbon">
+        <div class="c-ribbon__line"></div> 
+      </div>
+      <div class="c-seal">
+        <div class="c-seal__emblem">♥</div>
+      </div>
+    </div>
+
+    <div class="c-scroll__holder c-scroll__holder--top">
+      <div class="c-scroll__knob c-scroll__knob--left"></div>
+      <div class="c-scroll__roll">
+        <div class="c-close-btn c-close-btn-top" id="closeBtnTop">✽</div>
+      </div>
+      <div class="c-scroll__knob c-scroll__knob--right"></div>
+    </div>
+
+    <div class="c-scroll__paper">
+      <div class="c-scroll__content">
+        <div class="c-scroll__text">
+          
+          <div class="salutation">To my dearest Florian,</div>
+          
+          <p>On this blessed Feast of Saint Valentine, I take quill in hand to declare the love that abideth within my heart — not for this day alone, but for every morrow that God granteth us. Each day spent in thy presence is a blessing and a joy beyond measure, a treasure richer than gold.</p>
+          
+          <p>My heart desireth naught but to walk beside thee for the rest of my days, sharing in thy laughter and standing firm beside thee in times of trial. I shall cherish thee dearly, care for thee tenderly, and hold thee in faithful devotion.</p>
+          
+          <p>Surely it was by God's gracious will that thou wert given unto me, a gift for which I am ever grateful. Whatever fate may bring, know that I shall remain steadfast at thy side, now and always.</p>
+          
+          <div class="signature-block">
+            <p>With enduring love and humble devotion,</p>
+            <p class="signature-main">Thine always.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="c-scroll__holder c-scroll__holder--bottom">
+      <div class="c-scroll__knob c-scroll__knob--left"></div>
+      <div class="c-scroll__roll">
+        <div class="c-close-btn c-close-btn-bottom" id="closeBtnBottom">✽</div>
+      </div>
+      <div class="c-scroll__knob c-scroll__knob--right"></div>
+    </div>
+
+  </div>
+
+  <script>
+    const scrollContainer = document.getElementById('scrollContainer');
+    const sealBtn = document.getElementById('sealBtn');
+    const closeBtnTop = document.getElementById('closeBtnTop');
+    const closeBtnBottom = document.getElementById('closeBtnBottom');
+    const instruction = document.querySelector('.instruction');
+
+    // Open the scroll
+    sealBtn.addEventListener('click', function() {
+      scrollContainer.classList.add('open');
+      instruction.style.display = 'none';
+    });
+
+    // Close the scroll and return to sealed state
+    function closeScroll() {
+      scrollContainer.classList.remove('open');
+      setTimeout(() => {
+        instruction.style.display = 'block';
+      }, 800);
+    }
+
+    closeBtnTop.addEventListener('click', closeScroll);
+    closeBtnBottom.addEventListener('click', closeScroll);
+
+    // Prevent double-tap zoom on iOS
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+  </script>
+</body>
+</html>
